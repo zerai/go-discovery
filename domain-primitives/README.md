@@ -1,4 +1,4 @@
-# Doamin primitives
+# Domain primitives
 
 - testing a simple value object
 
