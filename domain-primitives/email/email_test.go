@@ -39,11 +39,25 @@ func TestEmail(t *testing.T)  {
 	})
 
 	t.Run("Malformed email address should returns error", func (t *testing.T)  {
-		malformedValue := "@google.com"
+		invalidEmailDataProvider := []struct {
+			malformedEmail string
+			error  error
+		}{
+			{"johndoe", ErrInvalidEmail},
+			{"johndoe.", ErrInvalidEmail},
+			{"john.doe", ErrInvalidEmail},
+			{"john.doe@", ErrInvalidEmail},
+			{"john.doe@google", ErrInvalidEmail},
+			{"john.doe@google.", ErrInvalidEmail},
+			{"@google.com", ErrInvalidEmail},
+			{"@google.", ErrInvalidEmail},
+			{"@google.", ErrInvalidEmail},
+		}
 		
-		_, err := New(malformedValue)
-
-		assertError(t, err, "Invalid Email.")
+		for _, tt := range invalidEmailDataProvider {
+			_, err := New(tt.malformedEmail)
+			assertError(t, err, tt.error.Error())
+		}
 	})
 
  	t.Run("Returns internal value", func (t *testing.T)  {
