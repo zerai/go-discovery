@@ -1,14 +1,19 @@
 package email
 
-import "testing"
+import (
+	"testing"
+	//"errors"
+)
 
 
 func TestEmail(t *testing.T)  {
 	
 	t.Run("Can be created form string", func (t *testing.T)  {
 		value := "foo@example.com"
-		
-		email := NewEmail(value)
+		email, err := New(value)
+		if err != nil {
+			t.Error("got an error but didnt expected one" )
+		}
 
 		got := email.Value()
 		want := value
@@ -18,9 +23,16 @@ func TestEmail(t *testing.T)  {
 		}
 	})
 
-	t.Run("Returns internal value", func (t *testing.T)  {
-		value := "foo@example.com"
+	t.Run("Empty string should returns error", func (t *testing.T)  {
+		emptyValue := ""
 		
+		_, err := New(emptyValue)
+
+		assertError(t, err, "Invalid email address")
+	})
+
+ 	t.Run("Returns internal value", func (t *testing.T)  {
+		value := "foo@example.com"
 		email := Email{value: value}
 
 		got := email.Value()
@@ -33,7 +45,6 @@ func TestEmail(t *testing.T)  {
 
 	t.Run("Returns a string value", func (t *testing.T)  {
 		value := "foo@example.com"
-		
 		email := Email{value: value}
 
 		got := email.String()
@@ -70,4 +81,15 @@ func assertFalse(t *testing.T, got bool)  {
 	if got != false {
 		t.Errorf("%v is not false", got)
 	}
+}
+
+ func assertError(t *testing.T, got error, want string) {
+    t.Helper()
+    if got == nil {
+        t.Fatal("didn't get an error but wanted one")
+    }
+
+    if got.Error() != want {
+        t.Errorf("got %q, want %q", got, want)
+    }
 }

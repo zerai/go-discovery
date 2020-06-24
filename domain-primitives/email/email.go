@@ -1,13 +1,22 @@
 package email
 
+import (
+	"errors"
+)
+
 type Email struct{
 	value string
 }
 
-func NewEmail(email string) *Email {
-    return &Email{
-		value: email,
+func New(email string) (*Email, error) {
+	
+	if len(email) <= 0 {
+		return nil, errors.New("Invalid email address")
 	}
+
+	return &Email{
+		value: email,
+	}, nil
 }
 
 func (e Email) Value() string {
