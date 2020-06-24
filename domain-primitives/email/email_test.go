@@ -2,7 +2,6 @@ package email
 
 import (
 	"testing"
-	//"errors"
 )
 
 
@@ -28,7 +27,15 @@ func TestEmail(t *testing.T)  {
 		
 		_, err := New(emptyValue)
 
-		assertError(t, err, "Invalid email address")
+		assertError(t, err, "Invalid Email.")
+	})
+
+	t.Run("Short string should returns error", func (t *testing.T)  {
+		shortValue := "a@a.a"
+		
+		_, err := New(shortValue)
+
+		assertError(t, err, "Invalid email: min length allowed is 5")
 	})
 
  	t.Run("Returns internal value", func (t *testing.T)  {
