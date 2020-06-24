@@ -5,7 +5,6 @@ import (
 	"strings"
 )
 
-
 const (
 	minLength = 5	
 )
@@ -14,7 +13,6 @@ var (
 	ErrInvalidEmail  = errors.New("Invalid Email.")
 	ErrEmailTooShort = errors.New("Invalid email: min length allowed is 5")
 )
-
 
 type Email struct{
 	value string

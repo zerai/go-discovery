@@ -11,7 +11,7 @@ func TestEmail(t *testing.T)  {
 		value := "foo@example.com"
 		email, err := New(value)
 		if err != nil {
-			t.Error("got an error but didnt expected one" )
+			t.Error("got an error but didn't expected one" )
 		}
 
 		got := email.Value()
