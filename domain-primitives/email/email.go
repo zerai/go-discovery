@@ -4,6 +4,12 @@ type Email struct{
 	value string
 }
 
+func NewEmail(email string) *Email {
+    return &Email{
+		value: email,
+	}
+}
+
 func (e Email) Value() string {
 	return e.value
 }

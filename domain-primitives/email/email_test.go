@@ -5,6 +5,19 @@ import "testing"
 
 func TestEmail(t *testing.T)  {
 	
+	t.Run("Can be created form string", func (t *testing.T)  {
+		value := "foo@example.com"
+		
+		email := NewEmail(value)
+
+		got := email.Value()
+		want := value
+
+		if got != want {
+			t.Errorf("got %s but want %s", got, want)
+		}
+	})
+
 	t.Run("Returns internal value", func (t *testing.T)  {
 		value := "foo@example.com"
 		
