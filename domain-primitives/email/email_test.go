@@ -38,6 +38,14 @@ func TestEmail(t *testing.T)  {
 		assertError(t, err, "Invalid email: min length allowed is 5")
 	})
 
+	t.Run("Malformed email address should returns error", func (t *testing.T)  {
+		malformedValue := "@google.com"
+		
+		_, err := New(malformedValue)
+
+		assertError(t, err, "Invalid Email.")
+	})
+
  	t.Run("Returns internal value", func (t *testing.T)  {
 		value := "foo@example.com"
 		email := Email{value: value}

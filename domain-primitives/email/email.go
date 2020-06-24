@@ -2,6 +2,7 @@ package email
 
 import (
 	"errors"
+	"regexp"
 	"strings"
 )
 
@@ -27,6 +28,11 @@ func New(e string) (*Email, error) {
 
 	if len(email) <= minLength {
 		return nil, ErrEmailTooShort
+	}
+
+	Re := regexp.MustCompile(`^[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,4}$`)
+	if Re.MatchString(email) == false {
+		return nil, ErrInvalidEmail
 	}
 
 	return &Email{
