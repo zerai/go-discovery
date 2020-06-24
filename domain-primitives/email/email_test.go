@@ -29,13 +29,19 @@ func TestEmail(t *testing.T)  {
 
 	t.Run("Can be compared", func (t *testing.T)  {
 		first := Email{value: "pippo"}
-		second := Email{value: "pluto"}
+		second := Email{value: "pippo"}
 
 		got := first.Equals(second)
-		want := false
 
-		if got != want {
-			t.Errorf("got %v but want %v", got, want)
-		}
+		assertTrue(t, got)
 	})
+}
+
+func assertTrue(t *testing.T, got bool)  {
+	t.Helper()
+
+	if got != true {
+		t.Errorf("%v is not true", got)
+	}
+
 }
