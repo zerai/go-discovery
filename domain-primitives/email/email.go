@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	minLength = 5	
+	minLength = 5
 )
 
 var (
@@ -15,13 +15,13 @@ var (
 	ErrEmailTooShort = errors.New("Invalid email: min length allowed is 5")
 )
 
-type Email struct{
+type Email struct {
 	value string
 }
 
 func New(e string) (*Email, error) {
-	
-	email := strings.TrimSpace(e) 
+
+	email := strings.TrimSpace(e)
 	if len(email) <= 0 {
 		return nil, ErrInvalidEmail
 	}
@@ -53,7 +53,6 @@ func (e Email) Equals(other Email) bool {
 	if e.value == other.value {
 		return true
 	}
-	
+
 	return false
 }
-

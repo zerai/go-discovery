@@ -4,14 +4,13 @@ import (
 	"testing"
 )
 
+func TestEmail(t *testing.T) {
 
-func TestEmail(t *testing.T)  {
-	
-	t.Run("Can be created form string", func (t *testing.T)  {
+	t.Run("Can be created form string", func(t *testing.T) {
 		value := "foo@example.com"
 		email, err := New(value)
 		if err != nil {
-			t.Error("got an error but didn't expected one" )
+			t.Error("got an error but didn't expected one")
 		}
 
 		got := email.Value()
@@ -22,26 +21,26 @@ func TestEmail(t *testing.T)  {
 		}
 	})
 
-	t.Run("Empty string should returns error", func (t *testing.T)  {
+	t.Run("Empty string should returns error", func(t *testing.T) {
 		emptyValue := ""
-		
+
 		_, err := New(emptyValue)
 
 		assertError(t, err, "Invalid Email.")
 	})
 
-	t.Run("Short string should returns error", func (t *testing.T)  {
+	t.Run("Short string should returns error", func(t *testing.T) {
 		shortValue := "a@a.a"
-		
+
 		_, err := New(shortValue)
 
 		assertError(t, err, "Invalid email: min length allowed is 5")
 	})
 
-	t.Run("Malformed email address should returns error", func (t *testing.T)  {
+	t.Run("Malformed email address should returns error", func(t *testing.T) {
 		invalidEmailDataProvider := []struct {
 			malformedEmail string
-			error  error
+			error          error
 		}{
 			{"johndoe", ErrInvalidEmail},
 			{"johndoe.", ErrInvalidEmail},
@@ -53,14 +52,14 @@ func TestEmail(t *testing.T)  {
 			{"@google.", ErrInvalidEmail},
 			{"@google.", ErrInvalidEmail},
 		}
-		
+
 		for _, tt := range invalidEmailDataProvider {
 			_, err := New(tt.malformedEmail)
 			assertError(t, err, tt.error.Error())
 		}
 	})
 
- 	t.Run("Returns internal value", func (t *testing.T)  {
+	t.Run("Returns internal value", func(t *testing.T) {
 		value := "foo@example.com"
 		email := Email{value: value}
 
@@ -72,7 +71,7 @@ func TestEmail(t *testing.T)  {
 		}
 	})
 
-	t.Run("Returns a string value", func (t *testing.T)  {
+	t.Run("Returns a string value", func(t *testing.T) {
 		value := "foo@example.com"
 		email := Email{value: value}
 
@@ -84,7 +83,7 @@ func TestEmail(t *testing.T)  {
 		}
 	})
 
-	t.Run("Can be compared", func (t *testing.T)  {
+	t.Run("Can be compared", func(t *testing.T) {
 		first := Email{value: "foo@example.com"}
 		second := Email{value: "bar@example.com"}
 		copyOfFirst := Email{value: "foo@example.com"}
@@ -95,7 +94,7 @@ func TestEmail(t *testing.T)  {
 	})
 }
 
-func assertTrue(t *testing.T, got bool)  {
+func assertTrue(t *testing.T, got bool) {
 	t.Helper()
 
 	if got != true {
@@ -104,7 +103,7 @@ func assertTrue(t *testing.T, got bool)  {
 
 }
 
-func assertFalse(t *testing.T, got bool)  {
+func assertFalse(t *testing.T, got bool) {
 	t.Helper()
 
 	if got != false {
@@ -112,13 +111,13 @@ func assertFalse(t *testing.T, got bool)  {
 	}
 }
 
- func assertError(t *testing.T, got error, want string) {
-    t.Helper()
-    if got == nil {
-        t.Fatal("didn't get an error but wanted one")
-    }
+func assertError(t *testing.T, got error, want string) {
+	t.Helper()
+	if got == nil {
+		t.Fatal("didn't get an error but wanted one")
+	}
 
-    if got.Error() != want {
-        t.Errorf("got %q, want %q", got, want)
-    }
+	if got.Error() != want {
+		t.Errorf("got %q, want %q", got, want)
+	}
 }
