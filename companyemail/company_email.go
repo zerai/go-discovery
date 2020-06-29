@@ -29,6 +29,8 @@ var (
 //CompanyEmail : value object
 type CompanyEmail interface {
 	String() string
+	Value() string
+	Equals(o CompanyEmail) bool
 }
 
 type companyEmail struct {
@@ -37,6 +39,17 @@ type companyEmail struct {
 
 func (p *companyEmail) String() string {
 	return p.value
+}
+
+func (p *companyEmail) Value() string {
+	return p.value
+}
+
+func (p *companyEmail) Equals(o CompanyEmail) bool {
+	if p.Value() == o.Value() {
+		return true
+	}
+	return false
 }
 
 func isValidDomainName(emailAddress string) bool {

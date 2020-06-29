@@ -79,6 +79,27 @@ func TestCompanyEmail(t *testing.T) {
 
 		assertError(t, err, errCompanyEmailInvalidDomain.Error())
 	})
+
+	t.Run("Invalid domain in email address should returns error", func(t *testing.T) {
+		value := "foo@notacompanydomain.com"
+
+		_, err := NewCompanyEmail(value)
+
+		assertError(t, err, errCompanyEmailInvalidDomain.Error())
+	})
+
+	t.Run("Can be compared", func(t *testing.T) {
+		first, firstError := NewCompanyEmail("foo@acme.com")
+		second, secondError := NewCompanyEmail("bar@acme.org")
+		copyOfFirst, copyOfFirstError := NewCompanyEmail("foo@acme.com")
+
+		if firstError != nil || secondError != nil || copyOfFirstError != nil {
+			t.Error("got an error but didn't expected one")
+		}
+		assertFalse(t, first.Equals(second))
+		assertTrue(t, first.Equals(copyOfFirst))
+		assertFalse(t, second.Equals(copyOfFirst))
+	})
 }
 
 func assertTrue(t *testing.T, got bool) {
